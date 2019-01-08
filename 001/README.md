@@ -1,5 +1,5 @@
 ---
-title: "001 two-sum"
+title: "001 twoSum"
 ---
 
 ## 题目：两数之和

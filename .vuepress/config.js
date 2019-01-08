@@ -18,8 +18,8 @@ module.exports = {
     ["script", {}, mathjax]
   ],
   base: "/leetcode/",
-  title: "GodBMW",
-  description: "Just a demo to learn vuepress",
+  title: "Leetcode",
+  description: "Leetcode解题报告, 算法, 数据结构, 笔记, 面试, javascript",
   markdown: {
     lineNumbers: true,
     // anchor: { permalink: false },
