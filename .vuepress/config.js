@@ -1,9 +1,22 @@
 const ROOT = ".";
 
 const sidebar = require("./vendor/sidebarConfig")(ROOT);
+const mathjax = require("./vendor/mathjax");
+
 sidebar.splice(0, 0, "/about/");
 
 module.exports = {
+  head: [
+    [
+      "script",
+      {
+        type: "text/javascript",
+        src:
+          "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"
+      }
+    ],
+    ["script", {}, mathjax]
+  ],
   base: "/leetcode/",
   title: "GodBMW",
   description: "Just a demo to learn vuepress",
