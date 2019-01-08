@@ -1,7 +1,7 @@
 const ROOT = ".";
 
 const sidebar = require("./vendor/sidebarConfig")(ROOT);
-sidebar.splice(0, 0, "/about");
+sidebar.splice(0, 0, "/about/");
 
 module.exports = {
   base: "/leetcode/",
@@ -19,7 +19,7 @@ module.exports = {
     sidebar,
     nav: [
       { text: "🏠首页", link: "/" },
-      { text: "💡介绍", link: "/about" },
+      { text: "💡介绍", link: "/about/" },
       { text: "👱抓我", link: "https://godbmw.com/" }
     ]
   }
