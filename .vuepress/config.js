@@ -21,8 +21,6 @@ module.exports = {
   title: "GODBMW.com",
   description: "Leetcode解题报告, 算法, 数据结构, 笔记, 面试, javascript",
   markdown: {
-    lineNumbers: true,
-    // anchor: { permalink: false },
     toc: { includeLevel: [1, 2, 3] }
   },
   themeConfig: {
