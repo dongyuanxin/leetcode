@@ -18,7 +18,7 @@ module.exports = {
     ["script", {}, mathjax]
   ],
   base: "/leetcode/",
-  title: "Leetcode",
+  title: "GODBMW.com",
   description: "Leetcode解题报告, 算法, 数据结构, 笔记, 面试, javascript",
   markdown: {
     lineNumbers: true,
