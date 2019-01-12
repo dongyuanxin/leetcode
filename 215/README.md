@@ -18,7 +18,7 @@ Output: 4
 
 **Note**: You may assume k is always valid, 1 ≤ k ≤ array's length.
 
-## 解法 1
+## 解法 1: 快排后再筛选
 
 最笨的解法，直接先调用 BIF 进行逆序快排，然后取出第`k-1`个元素即可。
 
@@ -42,7 +42,7 @@ const findKthLargest = (nums = [], k) =>
   })[k - 1];
 ```
 
-## 解法 2
+## 解法 2: 快排中筛选
 
 利用快速排序的`partition`操作：**可以将元素放在排序后的数组中的正确位置**。
 
