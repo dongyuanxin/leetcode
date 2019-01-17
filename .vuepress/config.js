@@ -2,6 +2,7 @@ const ROOT = ".";
 
 const sidebar = require("./vendor/sidebarConfig")(ROOT);
 const mathjax = require("./vendor/mathjax");
+const ga = require("./vendor/ga");
 
 sidebar.splice(0, 0, "/about/");
 
@@ -15,7 +16,8 @@ module.exports = {
           "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"
       }
     ],
-    ["script", {}, mathjax]
+    ["script", {}, mathjax],
+    ["div", {}, ga]
   ],
   base: "/leetcode/",
   title: "GODBMW.com",
