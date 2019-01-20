@@ -3,11 +3,13 @@ const ROOT = ".";
 const sidebar = require("./vendor/sidebarConfig")(ROOT);
 const mathjax = require("./vendor/mathjax");
 const ga = require("./vendor/ga");
+const routeListen = require("./vendor/routeListen");
 
 sidebar.splice(0, 0, "/about/");
 
 module.exports = {
   head: [
+    ["script", {}, ga],
     [
       "script",
       {
@@ -17,15 +19,16 @@ module.exports = {
       }
     ],
     ["script", {}, mathjax],
-    ["div", {}, ga]
+    ["script", {}, routeListen]
   ],
   base: "/leetcode/",
-  title: "GODBMW.com",
+  title: "Leetcod 解题报告",
   description: "Leetcode解题报告, 算法, 数据结构, 笔记, 面试, javascript",
   markdown: {
     toc: { includeLevel: [1, 2, 3] }
   },
   themeConfig: {
+    activeHeaderLinks: false,
     repo: "dongyuanxin/leetcode",
     editLinks: true,
     editLinkText: "在 GitHub 上编辑此页",

@@ -29,17 +29,5 @@ const render = () => {
   }, 10);
 };
 
-const handleRouteChange = (() => {
-  let preHref = "";
-  return () => {
-    setInterval(() => {
-      if (preHref === window.location.href) return;
-      preHref = window.location.href;
-      render();
-    }, 100);
-  };
-})();
-
 document.addEventListener("DOMContentLoaded", render, false);
-handleRouteChange();
 `;
