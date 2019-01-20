@@ -1,18 +1,20 @@
 module.exports = `
 const handleRouteChange = (() => {
-  let preHref = "";
+  let preHref = "",
+    nowHref = "";
   return () => {
     setInterval(() => {
-      if (preHref === window.location.href) return;
-      let now = new Date().toTimeString();
-      preHref = window.location.href;
+      nowHref = window.location.origin + window.location.pathname;
+      if (preHref === nowHref) return;
 
-      ga("set", "page", preHref);
+      let now = new Date().toTimeString();
+      console.log("At", now, ", you visit", nowHref);
+      preHref = nowHref;
+
+      ga("set", "page", nowHref);
       ga("send", "pageview");
-      console.log("refresh ga at", now);
-      
+
       render(); // 渲染数学公式
-      console.log("render mathjax at", now);
     }, 1000 / 60);
   };
 })();
