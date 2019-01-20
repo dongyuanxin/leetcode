@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>003 lengthOfLongestSubstring | Leetcod 解题报告</title>
+    <meta name="description" content="Leetcode解题报告, 算法, 数据结构, 笔记, 面试, javascript">
+    <script>
+(function(i, s, o, g, r, a, m) {
+  i["GoogleAnalyticsObject"] = r;
+  (i[r] =
+    i[r] ||
+    function() {
+      (i[r].q = i[r].q || []).push(arguments);
+    }),
+    (i[r].l = 1 * new Date());
+  (a = s.createElement(o)), (m = s.getElementsByTagName(o)[0]);
+  a.async = 1;
+  a.src = g;
+  m.parentNode.insertBefore(a, m);
+})(
+  window,
+  document,
+  "script",
+  "https://www.google-analytics.com/analytics.js",
+  "ga"
+);
+
+ga("create", "UA-124601890-1", "auto");
+ga("send", "pageview");
+</script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/leancloud-storage@3.11.1/dist/av-min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+  <script>
+const lcLog = pathname => {
+  pathname = decodeURIComponent(pathname);
+
+  let Counter = AV.Object.extend("Counter");
+  let counter = new Counter();
+  counter.set("visit_time", new Date().getTime().toString());
+  counter.set("user_agent", window.navigator.userAgent);
+  counter.set("identity_path", pathname);
+  counter.set("more_info", JSON.stringify(window.location));
+
+  let acl = new AV.ACL();
+  acl.setPublicReadAccess(true);
+  acl.setPublicWriteAccess(false);
+  counter.setACL(acl);
+  counter.save();
+};
+</script>
+  <script>
+const render = () => {
+  const mathjaxConfig = {
+    showProcessingMessages: false, //关闭js加载过程信息
+    messageStyle: "none", //不显示信息
+    jax: ["input/TeX", "output/HTML-CSS"],
+    tex2jax: {
+      inlineMath: [["$", "$"], ["\(", "\)"]], //行内公式选择符
+      displayMath: [["$$", "$$"], ["\[", "\]"]], //段内公式选择符
+      skipTags: ["script", "noscript", "style", "textarea", "pre", "code", "a"] //避开某些标签
+    },
+    "HTML-CSS": {
+      availableFonts: ["STIX", "TeX"], //可选字体
+      showMathMenu: false //关闭右击菜单显示
+    }
+  };
+  let mathjaxInterval = setInterval(() => {
+    if (!window.MathJax) {
+      console.log("not loaded");
+      return;
+    }
+    window.MathJax.Hub.Config(mathjaxConfig);
+    window.MathJax.Hub.Queue([
+      "Typeset",
+      MathJax.Hub,
+      document.getElementById("app")
+    ]);
+    clearInterval(mathjaxInterval);
+  }, 10);
+};
+
+document.addEventListener("DOMContentLoaded", render, false);
+</script>
+  <script>
+const initLc = () => {
+  try {
+    AV.init("j3TlSqBMjoXnrIrNYB5En5Y1-gzGzoHsz", "d2rWR1nq5chvzXzh3bSyB8ug");
+  } catch (error) {}
+}
+
+const handleRouteChange = (() => {
+  let preHref = "",
+    nowHref = "";
+  return () => {
+    setInterval(() => {
+      nowHref = window.location.origin + window.location.pathname;
+      if (preHref === nowHref) return;
+
+      let now = new Date().toTimeString();
+      console.log("At", now, ", you visit", nowHref);
+      preHref = nowHref;
+      
+      // google analysis
+      ga("set", "page", nowHref);
+      ga("send", "pageview");
+
+      // mathjax
+      render(); // 渲染数学公式
+      
+      // leancloud counter
+      lcLog(window.location.pathname);
+    }, 1000 / 60);
+  };
+})();
+
+initLc();
+handleRouteChange();
+</script>
+    
+    <link rel="preload" href="/leetcode/assets/css/0.styles.bc534f5d.css" as="style"><link rel="preload" href="/leetcode/assets/js/app.54e3205b.js" as="script"><link rel="preload" href="/leetcode/assets/js/4.182e94fd.js" as="script"><link rel="prefetch" href="/leetcode/assets/js/10.a1aabab1.js"><link rel="prefetch" href="/leetcode/assets/js/11.96cdd04f.js"><link rel="prefetch" href="/leetcode/assets/js/12.24a2dfdc.js"><link rel="prefetch" href="/leetcode/assets/js/13.b8a831ef.js"><link rel="prefetch" href="/leetcode/assets/js/14.ac5ab166.js"><link rel="prefetch" href="/leetcode/assets/js/15.72a2027f.js"><link rel="prefetch" href="/leetcode/assets/js/2.89e816ce.js"><link rel="prefetch" href="/leetcode/assets/js/3.15de0d1e.js"><link rel="prefetch" href="/leetcode/assets/js/5.1505c38e.js"><link rel="prefetch" href="/leetcode/assets/js/6.ea3f8136.js"><link rel="prefetch" href="/leetcode/assets/js/7.19c48c4d.js"><link rel="prefetch" href="/leetcode/assets/js/8.29662e16.js"><link rel="prefetch" href="/leetcode/assets/js/9.d508efdf.js">
+    <link rel="stylesheet" href="/leetcode/assets/css/0.styles.bc534f5d.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/leetcode/" class="home-link router-link-active"><!----> <span class="site-name">Leetcod 解题报告</span></a> <div class="links" style="max-width:nullpx;"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/leetcode/" class="nav-link">🏠首页</a></div><div class="nav-item"><a href="/leetcode/about/" class="nav-link">💡介绍</a></div><div class="nav-item"><a href="https://godbmw.com/" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  👱抓我
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></div> <a href="https://github.com/dongyuanxin/leetcode" target="_blank" rel="noopener noreferrer" class="repo-link">
+    GitHub
+    <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></nav></div></header> <div class="sidebar-mask"></div> <div class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/leetcode/" class="nav-link">🏠首页</a></div><div class="nav-item"><a href="/leetcode/about/" class="nav-link">💡介绍</a></div><div class="nav-item"><a href="https://godbmw.com/" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  👱抓我
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></div> <a href="https://github.com/dongyuanxin/leetcode" target="_blank" rel="noopener noreferrer" class="repo-link">
+    GitHub
+    <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></nav>  <ul class="sidebar-links"><li><a href="/leetcode/about/" class="sidebar-link">💡项目介绍</a></li><li><a href="/leetcode/001/" class="sidebar-link">001 twoSum</a></li><li><a href="/leetcode/003/" class="active sidebar-link">003 lengthOfLongestSubstring</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/leetcode/003/#题目描述" class="sidebar-link">题目描述</a></li><li class="sidebar-sub-header"><a href="/leetcode/003/#解法-1-滑动窗口" class="sidebar-link">解法 1: 滑动窗口</a></li></ul></li><li><a href="/leetcode/026/" class="sidebar-link">026 removeDuplicates</a></li><li><a href="/leetcode/075/" class="sidebar-link">075 sortColors</a></li><li><a href="/leetcode/209/" class="sidebar-link">209 minSubArrayLen</a></li><li><a href="/leetcode/215/" class="sidebar-link">215 findKthLargest</a></li><li><a href="/leetcode/283/" class="sidebar-link">283 moveZeroes</a></li><li><a href="/leetcode/349/" class="sidebar-link">349 intersection</a></li><li><a href="/leetcode/350/" class="sidebar-link">350 intersect</a></li></ul> </div> <div class="page"> <div class="content"><h2 id="题目描述"><a href="#题目描述" aria-hidden="true" class="header-anchor">#</a> 题目描述</h2> <blockquote><p>Given a string, find the length of the longest substring without repeating characters.</p></blockquote> <p>Example 1:</p> <div class="language- extra-class"><pre class="language-text"><code>Input: &quot;abcabcbb&quot;
+Output: 3
+Explanation: The answer is &quot;abc&quot;, with the length of 3.
+</code></pre></div><p>Example 2:</p> <div class="language- extra-class"><pre class="language-text"><code>Input: &quot;bbbbb&quot;
+Output: 1
+Explanation: The answer is &quot;b&quot;, with the length of 1.
+</code></pre></div><p>Example 3:</p> <div class="language- extra-class"><pre class="language-text"><code>Input: &quot;pwwkew&quot;
+Output: 3
+Explanation: The answer is &quot;wke&quot;, with the length of 3.
+            Note that the answer must be a substring, &quot;pwke&quot; is a subsequence and not a substring.
+</code></pre></div><h2 id="解法-1-滑动窗口"><a href="#解法-1-滑动窗口" aria-hidden="true" class="header-anchor">#</a> 解法 1: 滑动窗口</h2> <p><strong>思路</strong>：</p> <ol><li>创建映射表：<code>freq[ch]</code>代表字符<code>ch</code>出现次数</li> <li>如果当前元素没有出现过，那么滑动窗口向右扩展，更新<code>freq</code>，并且比较/更新结果</li> <li>否则，滑动窗口左侧缩小 1 位，更新<code>freq</code></li> <li>重新回到第 2 步判断</li></ol> <div class="language-javascript extra-class"><pre class="language-javascript"><code><span class="token comment">/**
+ * @param {string} s
+ * @return {number}
+ */</span>
+
+<span class="token keyword">const</span> <span class="token function-variable function">lengthOfLongestSubstring</span> <span class="token operator">=</span> s <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  <span class="token keyword">let</span> freq <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+  <span class="token keyword">let</span> length <span class="token operator">=</span> s<span class="token punctuation">.</span>length<span class="token punctuation">;</span>
+
+  <span class="token comment">// 滑动窗口是: s[left, right]</span>
+  <span class="token keyword">let</span> res <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">,</span>
+    left <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span>
+    right <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+
+  <span class="token keyword">while</span> <span class="token punctuation">(</span>left <span class="token operator">&lt;</span> right<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>right <span class="token operator">&lt;</span> length <span class="token operator">&amp;&amp;</span> <span class="token operator">!</span>freq<span class="token punctuation">[</span>s<span class="token punctuation">[</span>right<span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      freq<span class="token punctuation">[</span>s<span class="token punctuation">[</span>right<span class="token punctuation">]</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+      right<span class="token operator">++</span><span class="token punctuation">;</span>
+      res <span class="token operator">=</span> res <span class="token operator">&lt;</span> right <span class="token operator">-</span> left <span class="token operator">-</span> <span class="token number">1</span> <span class="token operator">?</span> right <span class="token operator">-</span> left <span class="token operator">-</span> <span class="token number">1</span> <span class="token punctuation">:</span> res<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+      left<span class="token operator">++</span><span class="token punctuation">;</span>
+      <span class="token comment">// 从第一个元素开始, 保证一旦重复, 立即减一; 而原来就是1, 所以直接置0, 即可</span>
+      freq<span class="token punctuation">[</span>s<span class="token punctuation">[</span>left<span class="token punctuation">]</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token keyword">return</span> res<span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+</code></pre></div></div> <div class="page-edit"><div class="edit-link"><a href="https://github.com/dongyuanxin/leetcode/edit/master/003/README.md" target="_blank" rel="noopener noreferrer">在 GitHub 上编辑此页</a> <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></div> <!----></div> <div class="page-nav"><p class="inner"><span class="prev">
+        ←
+        <a href="/leetcode/001/" class="prev">
+          001 twoSum
+        </a></span> <span class="next"><a href="/leetcode/026/">
+          026 removeDuplicates
+        </a>
+        →
+      </span></p></div> </div> <!----></div></div>
+    <script src="/leetcode/assets/js/app.54e3205b.js" defer></script><script src="/leetcode/assets/js/4.182e94fd.js" defer></script>
+  </body>
+</html>
