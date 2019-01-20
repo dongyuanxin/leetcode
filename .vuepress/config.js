@@ -4,6 +4,7 @@ const sidebar = require("./vendor/sidebarConfig")(ROOT);
 const mathjax = require("./vendor/mathjax");
 const ga = require("./vendor/ga");
 const routeListen = require("./vendor/routeListen");
+const leancloud = require("./vendor/leancloud");
 
 sidebar.splice(0, 0, "/about/");
 
@@ -15,9 +16,18 @@ module.exports = {
       {
         type: "text/javascript",
         src:
+          "https://cdn.jsdelivr.net/npm/leancloud-storage@3.11.1/dist/av-min.js"
+      }
+    ],
+    [
+      "script",
+      {
+        type: "text/javascript",
+        src:
           "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"
       }
     ],
+    ["script", {}, leancloud],
     ["script", {}, mathjax],
     ["script", {}, routeListen]
   ],
